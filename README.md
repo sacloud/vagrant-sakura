@@ -44,17 +44,22 @@ $ vagrant box add dummy https://github.com/tsahara/vagrant-sakura/raw/master/dum
 Vagrant.configure("2") do |config|
   config.vm.box = "dummy"
   config.ssh.username = "ubuntu"
+  config.ssh.private_key_path = File.expand_path "~/.ssh/id_rsa"
 
   config.vm.provider :sakura do |sakura|
     sakura.access_token = 'YOUR ACCESS TOKEN'
     sakura.access_token_secret = 'YOUR ACCESS TOKEN SECRET'
-    #sakura.sshkey_id = '112500313986'
-    #sakura.disk_source_archive = 112500182464
+    sakura.sshkey_id = 'YOUR PUBLIC KEY ID'
   end
 end
 ```
 
 そして ``vagrant up --provider=sakrua`` を実行してください。
+
+サーバのディスクソースを ``sakura.disk_source_archive`` で指定しなかった
+場合のデフォルトは ``112500182464`` で Ubuntu 12.04.2LTS-server 64bit です。
+このディスクソースのログインアカウントは ``root`` ではないため、
+``config.ssh.username`` で指定してやる必要があります。
 
 なお、さくらのクラウド API を利用するための API キー(ACCESS TOKEN)と
 シークレットトークン(ACCESS TOKEN SECRET)は環境変数
