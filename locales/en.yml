@@ -1,0 +1,39 @@
+en:
+  vagrant_sakura:
+    already_created: |-
+      The server is already created.
+    creating_instance: |-
+      Creating a server with the following settings...
+    down: |-
+      The server is down.
+    not_created: |-
+      Server is not created. Please run `vagrant up` first.
+    power_off: |-
+      Turning off power...
+    power_on: |-
+      Turning on power.
+    ready: |-
+      Server is booted and ready for use!
+    reset: |-
+      The server was reloaded.
+    state_cleaning: |-
+      The server is terminated and cleaning up.
+    state_down: |-
+      The server is down.
+    state_not_created: |-
+      The server has not been created yet, or destroyed.
+    state_up: |-
+      The server is up and running.
+    terminating: |-
+      Terminating the server...
+    will_not_destroy: |-
+      The server '%{name}' will not be destroyed, since the confirmation
+      was declined.
+    waiting_for_ssh: |-
+      Waiting for SSH to become available...
+
+    config:
+      access_token_required: |-
+        An access token is required via "access_token"
+      access_token_secret_required: |-
+        An access token secret is required via "access_token_secret"
