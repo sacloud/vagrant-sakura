@@ -35,6 +35,14 @@ module VagrantPlugins
         end
       end
 
+      def self.action_list_id
+        Vagrant::Action::Builder.new.tap do |b|
+          b.use ConfigValidate
+          b.use ConnectSakura
+          b.use ListId
+        end
+      end
+
 #      def self.action_provision
 #        Vagrant::Action::Builder.new.tap do |b|
 #          b.use ConfigValidate
@@ -143,6 +151,7 @@ module VagrantPlugins
       autoload :DeleteServer, action_root.join("delete_server")
       autoload :IsCreated, action_root.join("is_created")
       autoload :Halt, action_root.join("halt")
+      autoload :ListId, action_root.join("list_id")
       autoload :MessageAlreadyCreated, action_root.join("message_already_created")
       autoload :MessageDown, action_root.join("message_down")
       autoload :MessageNotCreated, action_root.join("message_not_created")

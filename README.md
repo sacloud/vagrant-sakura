@@ -66,6 +66,13 @@ end
 ``SAKURA_ACCESS_TOKEN`` と ``SAKURA_ACCESS_TOKEN_SECRET``で指定することも
 できます。
 
+## コマンド
+`sakura-list-id` コマンドを使って、`Vagrantfile` で指定するリソース ID
+を調べることができます。
+```
+$ vagrant sakuara-list-id
+...
+```
 
 ## 設定
 
