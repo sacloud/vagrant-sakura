@@ -1,4 +1,3 @@
-require "log4r"
 require 'vagrant-sakura/driver/api'
 
 module VagrantPlugins
@@ -6,14 +5,14 @@ module VagrantPlugins
     module Action
       class ConnectSakura
         def initialize(app, env)
-          @app    = app
-          @logger = Log4r::Logger.new("vagrant_sakura::action::connect_sakura")
+          @app = app
         end
 
         def call(env)
           token  = env[:machine].provider_config.access_token
           secret = env[:machine].provider_config.access_token_secret
-          env[:sakura_api] = Driver::API.new(token, secret)
+          zone   = env[:machine].provider_config.zone_id
+          env[:sakura_api] = Driver::API.new(token, secret, zone)
 
           @app.call(env)
         end

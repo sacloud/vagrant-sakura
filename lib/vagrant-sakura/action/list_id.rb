@@ -9,6 +9,9 @@ module VagrantPlugins
         def call(env)
           api = env[:sakura_api]
 
+          puts "Zone: %s" % env[:machine].provider_config.zone_id
+          puts ""
+
           puts "---- Archives ----"
           puts "%-14s %s" % ["ID", "Name"]
           r = api.get("/archive")

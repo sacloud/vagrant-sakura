@@ -38,8 +38,8 @@ module VagrantPlugins
       # @return [String]
       attr_accessor :sshkey_id
 
-      # No Zone ID config - there is only one zone available now :)
-      #attr_accessor :zone_id
+      # The ID of the zone.
+      attr_accessor :zone_id
 
       def initialize
         @access_token        = UNSET_VALUE
@@ -49,6 +49,7 @@ module VagrantPlugins
         @server_name         = UNSET_VALUE
         @server_plan         = UNSET_VALUE
         @sshkey_id           = UNSET_VALUE
+        @zone_id             = UNSET_VALUE
       end
 
       def finalize!
@@ -78,6 +79,10 @@ module VagrantPlugins
 
         if @sshkey_id == UNSET_VALUE
           @sshkey_id = nil
+        end
+
+        if @zone_id == UNSET_VALUE
+          @zone_id = "is1a"  # the first zone
         end
       end
 

@@ -1,3 +1,4 @@
+require 'log4r'
 require 'net/https'
 require 'json'
 
@@ -5,15 +6,15 @@ module VagrantPlugins
   module Sakura
     module Driver
       APIHOST   = "secure.sakura.ad.jp"
-      APIPREFIX = "/cloud/api/cloud/1.0"
       CERTFILE = File.expand_path("../cert.pem", __FILE__)
 
       class API
-        def initialize(access_token, access_token_secret)
+        def initialize(access_token, access_token_secret, zone_id)
           @logger = Log4r::Logger.new("vagrant::provider::sakura")
 
           @access_token = access_token
           @access_token_secret = access_token_secret
+          @prefix = "/cloud/zone/#{zone_id}/api/cloud/1.1"
 
           @https = Net::HTTP.new(APIHOST, 443)
           @https.use_ssl = true
@@ -23,25 +24,25 @@ module VagrantPlugins
         end
 
         def delete(resource, data = nil)
-          request = Net::HTTP::Delete.new(APIPREFIX + resource)
+          request = Net::HTTP::Delete.new(@prefix + resource)
           request.body = data.to_json if data
           do_request request
         end
 
         def get(resource, data = nil)
-          request = Net::HTTP::Get.new(APIPREFIX + resource)
+          request = Net::HTTP::Get.new(@prefix + resource)
           request.body = data.to_json if data
           do_request request
         end
 
         def post(resource, data)
-          request = Net::HTTP::Post.new(APIPREFIX + resource)
+          request = Net::HTTP::Post.new(@prefix + resource)
           request.body = data.to_json
           do_request request
         end
 
         def put(resource, data = nil)
-          request = Net::HTTP::Put.new(APIPREFIX + resource)
+          request = Net::HTTP::Put.new(@prefix + resource)
           request.body = if data then data.to_json else '' end
           do_request request
         end

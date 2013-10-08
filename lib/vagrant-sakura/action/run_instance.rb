@@ -33,7 +33,6 @@ module VagrantPlugins
           data = {
             "Disk" => {
               "Name" => server_name,
-              "Zone" => { "ID" => 31001 },      # Ishikari only
               "Plan" => { "ID" => disk_plan },
               "Connection" => "virtio",
               "SourceArchive" => {
@@ -68,7 +67,6 @@ module VagrantPlugins
           data = {
             "Server" => {
               "Name" => server_name,
-              "Zone" => { "ID" => 31001 },        # Ishikari
               "ServerPlan" => { "ID" => server_plan },
               "ConnectedSwitches" => [
                 { "Scope" => "shared", "BandWidthMbps" => 100 }
