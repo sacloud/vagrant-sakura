@@ -56,6 +56,8 @@ module VagrantPlugins
           case response.code
           when /2../
             # Success
+          when "400"
+            raise BadRequestError, emsg
           when "404"
             raise NotFoundError, emsg
           when "409"
@@ -69,6 +71,7 @@ module VagrantPlugins
         private :do_request
       end
 
+      class BadRequestError < RuntimeError; end
       class ConflictError < RuntimeError; end
       class GenericError < RuntimeError; end
       class NotFoundError < RuntimeError; end
