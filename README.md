@@ -1,5 +1,7 @@
 # Vagrant Sakura Provider
 
+[![Gem Version](https://badge.fury.io/rb/vagrant-sakura.png)](http://badge.fury.io/rb/vagrant-sakura)
+
 この gem は [Vagrant](http://www.vagrantup.com) に
 [さくらのクラウド](http://cloud.sakura.ad.jp)上のサーバを操作する
 機能を追加する provider です。
