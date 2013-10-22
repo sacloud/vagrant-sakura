@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["sahara@surt.net"]
   spec.description   = %q{Enables Vagrant to manage machines in Sakura Cloud.}
   spec.summary       = %q{Enables Vagrant to manage machines in Sakura Cloud.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/tsahara/vagrant-sakura"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

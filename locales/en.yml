@@ -16,6 +16,11 @@ en:
       Server is booted and ready for use!
     reset: |-
       The server was reloaded.
+    rsync_folder: |-
+      Rsyncing folder: %{hostpath} => %{guestpath}
+    rsync_not_found_warning: |-
+      Warning! Folder sync disabled because the rsync binary is missing.
+      Make sure rsync is installed and the binary can be found in the PATH.
     state_cleaning: |-
       The server is terminated and cleaning up.
     state_down: |-
