@@ -13,6 +13,11 @@ module VagrantPlugins
       # @return [String]
       attr_accessor :access_token_secret
 
+      # The ID of the disk to be connected to the server.
+      #
+      # @return [Fixnum]
+      attr_accessor :disk_id
+
       # The plan ID of the disk to be connected to the server.
       #
       # @return [Fixnum]
@@ -44,6 +49,7 @@ module VagrantPlugins
       def initialize
         @access_token        = UNSET_VALUE
         @access_token_secret = UNSET_VALUE
+        @disk_id             = UNSET_VALUE
         @disk_plan           = UNSET_VALUE
         @disk_source_archive = UNSET_VALUE
         @server_name         = UNSET_VALUE
@@ -59,6 +65,10 @@ module VagrantPlugins
 
         if @access_token_secret == UNSET_VALUE
           @access_token_secret = ENV['SAKURA_ACCESS_TOKEN_SECRET']
+        end
+
+        if @disk_id == UNSET_VALUE
+          @disk_id = nil  # create a new disk
         end
 
         if @disk_plan == UNSET_VALUE

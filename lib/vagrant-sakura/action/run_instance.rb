@@ -30,39 +30,43 @@ module VagrantPlugins
           env[:ui].info(" -- Disk Source Archive: #{disk_source_archive}")
 
           api = env[:sakura_api]
-          data = {
-            "Disk" => {
-              "Name" => server_name,
-              "Plan" => { "ID" => disk_plan },
-              "Connection" => "virtio",
-              "SourceArchive" => {
-                "ID" => disk_source_archive
-              } 
-            }
-          }
-          response = api.post("/disk", data)
-          unless response["Disk"]["ID"]
-            raise 'no Disk ID returned'
-          end
-          diskid = response["Disk"]["ID"]
-          # Disk Created
 
-          while true
-            response = api.get("/disk/#{diskid}")
-            case response["Disk"]["Availability"]
-            when "available"
-              break
-            when "migrating"
-              migrated = response["Disk"]["MigratedMB"]
-              size = response["Disk"]["SizeMB"]
-              env[:ui].info("Disk #{diskid} is migrating (#{migrated}/#{size})")
-            else
-              status = presponse["Disk"]["Availability"]
-              env[:ui].info("Disk #{diskid} is #{status}")
+          if env[:machine].provider_config.disk_id
+            diskid = env[:machine].provider_config.disk_id
+
+          else
+            data = {
+              "Disk" => {
+                "Name" => server_name,
+                "Plan" => { "ID" => disk_plan },
+                "Connection" => "virtio",
+                "SourceArchive" => {
+                  "ID" => disk_source_archive
+                } 
+              }
+            }
+            response = api.post("/disk", data)
+            unless response["Disk"]["ID"]
+              raise 'no Disk ID returned'
             end
-            sleep 3
+            diskid = response["Disk"]["ID"]
+
+            while true
+              response = api.get("/disk/#{diskid}")
+              case response["Disk"]["Availability"]
+              when "available"
+                break
+              when "migrating"
+                migrated = response["Disk"]["MigratedMB"]
+                size = response["Disk"]["SizeMB"]
+                env[:ui].info("Disk #{diskid} is migrating (#{migrated}/#{size})")
+              else
+                status = presponse["Disk"]["Availability"]
+                env[:ui].info("Disk #{diskid} is #{status}")
+              end
+              sleep 3
+            end
           end
-          # Wait for Disk is available
 
           data = {
             "Server" => {
@@ -80,8 +84,13 @@ module VagrantPlugins
           env[:machine].id = serverid = response["Server"]["ID"]
           # Server Created
 
-          response = api.put("/disk/#{diskid}/to/server/#{serverid}")
-          # Disk mounted to Server
+          begin
+            response = api.put("/disk/#{diskid}/to/server/#{serverid}")
+            # Disk mounted to Server
+          rescue VagrantPlugins::Sakura::Driver::NotFoundError
+            terminate(env)
+            raise
+          end
 
           data = {
             "UserSubnet" => {}

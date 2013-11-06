@@ -26,6 +26,9 @@ module VagrantPlugins
           end
 
           disks = response["Server"]["Disks"].map { |disk| disk["ID"] }
+          disks.delete_if { |diskid|
+            diskid == env[:machine].provider_config.disk_id.to_s
+          }
           data = { "WithDisk" => disks }
           response = api.delete("/server/#{serverid}", data)
           # error check

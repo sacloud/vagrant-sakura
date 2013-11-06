@@ -1,3 +1,7 @@
+# 0.0.4 (2013/11/06)
+
+- Support `disk_id` configuration to reuse Disk resource.
+
 # 0.0.3 (2013/10/22)
 
 - Support `provision` command.
