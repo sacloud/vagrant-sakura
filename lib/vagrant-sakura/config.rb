@@ -76,7 +76,7 @@ module VagrantPlugins
         end
 
         if @disk_source_archive == UNSET_VALUE
-          @disk_source_archive = 112500182464  # Ubuntu 12.04
+          @disk_source_archive = 112500459149 # Ubuntu Server 12.04.3 LTS 64bit
         end
 
         if @server_name == UNSET_VALUE
