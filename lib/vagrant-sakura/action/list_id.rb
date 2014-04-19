@@ -13,12 +13,13 @@ module VagrantPlugins
           puts ""
 
           puts "---- Archives ----"
-          puts "%-14s %s" % ["ID", "Name"]
+          puts "%-14s %5s  %s" % ["ID", "Size", "Name"]
           r = api.get("/archive")
           r["Archives"].sort { |a, b|
             a["DisplayOrder"] <=> b["DisplayOrder"]
           }.each { |archive|
-            puts "%-14u %s" % [archive["ID"], archive["Name"]]
+            gb = archive["SizeMB"] / 1024
+            puts "%-14u %3uGB  %s" % [archive["ID"], gb, archive["Name"]]
           }
           puts ""
 
