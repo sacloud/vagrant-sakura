@@ -1,3 +1,8 @@
+# 0.0.5 (2014/04/19)
+
+- Fix Vagrant 1.5 compatibility.
+- Update default disk archive.
+
 # 0.0.4 (2013/11/06)
 
 - Support `disk_id` configuration to reuse Disk resource.
