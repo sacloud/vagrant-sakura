@@ -1,3 +1,7 @@
+# 0.0.6 (2014/07/14)
+
+- Add `public_key_path` and `use_insecure_key` configuration parameters.
+
 # 0.0.5 (2014/04/19)
 
 - Fix Vagrant 1.5 compatibility.
