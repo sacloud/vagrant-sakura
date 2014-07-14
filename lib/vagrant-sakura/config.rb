@@ -28,6 +28,11 @@ module VagrantPlugins
       # @return [String]
       attr_accessor :disk_source_archive
 
+      # The pathname of the SSH public key to register on the server.
+      #
+      # @return [String]
+      attr_accessor :public_key_path
+
       # The name of the server.
       # 
       # @return [String]
@@ -43,6 +48,11 @@ module VagrantPlugins
       # @return [String]
       attr_accessor :sshkey_id
 
+      # Use insecure default key to login the server.
+      #
+      # @return [Boolean]
+      attr_accessor :use_insecure_key
+
       # The ID of the zone.
       attr_accessor :zone_id
 
@@ -52,9 +62,11 @@ module VagrantPlugins
         @disk_id             = UNSET_VALUE
         @disk_plan           = UNSET_VALUE
         @disk_source_archive = UNSET_VALUE
+        @public_key_path     = UNSET_VALUE
         @server_name         = UNSET_VALUE
         @server_plan         = UNSET_VALUE
         @sshkey_id           = UNSET_VALUE
+        @use_insecure_key    = UNSET_VALUE
         @zone_id             = UNSET_VALUE
       end
 
@@ -79,6 +91,8 @@ module VagrantPlugins
           @disk_source_archive = 112500459149 # Ubuntu Server 12.04.3 LTS 64bit
         end
 
+        @public_key_path = nil if @public_key_path == UNSET_VALUE
+
         if @server_name == UNSET_VALUE
           @server_name = nil
         end
@@ -87,9 +101,9 @@ module VagrantPlugins
           @server_plan = 1001  # 1Core-1GB - cheapest
         end
 
-        if @sshkey_id == UNSET_VALUE
-          @sshkey_id = nil
-        end
+        @sshkey_id = nil if @sshkey_id == UNSET_VALUE
+
+        @use_insecure_key = false if @use_insecure_key == UNSET_VALUE
 
         if @zone_id == UNSET_VALUE
           @zone_id = "is1a"  # the first zone
@@ -97,13 +111,17 @@ module VagrantPlugins
       end
 
       def validate(machine)
-        errors = []
+        errors = _detected_errors
 
-        if config.access_token.nil?
+        if @access_token.nil?
           errors << I18n.t("vagrant_sakura.config.access_token_required")
         end
-        if config.access_token_secret.nil?
+        if @access_token_secret.nil?
           errors << I18n.t("vagrant_sakura.config.access_token_secret_required")
+        end
+
+        if not (@sshkey_id or @public_key_path or @use_insecure_key)
+          errors << I18n.t("vagrant_sakura.config.need_ssh_key_config")
         end
 
         { "Sakura Provider" => errors }

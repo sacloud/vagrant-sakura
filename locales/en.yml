@@ -4,6 +4,10 @@ en:
       The server is already created.
     creating_instance: |-
       Creating a server with the following settings...
+    default_key_is_insecure: |-
+      Warning! You are using insecure default key to login to the server on
+      Sakura-no-cloud.  The key is publicly available (bundled in Vagrant
+      distribution) so malicious people can login to your server.
     down: |-
       The server is down.
     not_created: |-
@@ -42,3 +46,5 @@ en:
         An access token is required via "access_token"
       access_token_secret_required: |-
         An access token secret is required via "access_token_secret"
+      need_ssh_key_config: |-
+        You must set one of "sshkey_id", "pubic_key_path", or "use_insecure_key".

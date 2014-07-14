@@ -44,17 +44,19 @@ $ vagrant box add dummy https://github.com/tsahara/vagrant-sakura/raw/master/dum
 ```
 
 次に、以下のような Vagrantfile を作成し、必要な情報を埋めてください。
+**なお、以下の Vagrantfile は Vagrant 付属の "insecure key" でログインできる
+サーバを作成します。実用する際は次節の「SSH 鍵の指定方法」を参考に安全な
+SSH 鍵を設定してください。**
 
 ```Ruby
 Vagrant.configure("2") do |config|
   config.vm.box = "dummy"
   config.ssh.username = "ubuntu"
-  config.ssh.private_key_path = File.expand_path "~/.ssh/id_rsa"
 
   config.vm.provider :sakura do |sakura|
     sakura.access_token = 'YOUR ACCESS TOKEN'
     sakura.access_token_secret = 'YOUR ACCESS TOKEN SECRET'
-    sakura.sshkey_id = 'YOUR PUBLIC KEY ID'
+    sakura.use_insecure_key = true
   end
 end
 ```
@@ -70,6 +72,35 @@ end
 シークレットトークン(ACCESS TOKEN SECRET)は環境変数
 ``SAKURA_ACCESS_TOKEN`` と ``SAKURA_ACCESS_TOKEN_SECRET``で指定することも
 できます。
+
+## SSH 鍵の指定方法
+
+vagrant-sakura では、サーバにログインするための SSH 公開鍵を 3通りの方法で
+設定できます。
+
+ 1. コントロールパネルで設定済みの SSH 公開鍵をリソース ID で指定する。
+    対応する秘密鍵は ``override.ssh.private_key_path`` で指定できます。
+    ```
+    sakura.sshkey_id = '101234567890'
+    override.ssh.private_key_path = File.expand_path("~/.ssh/vagrant")
+    ```
+
+ 2. SSH 公開鍵のパスを指定する。この方法では、ひとつサーバを作成する度に SSH
+    公開鍵リソースがひとつ作成されます。vagrant-sakura が SSH 公開鍵リソース
+    を削除することはないため、SSH 公開鍵リソースが不必要に増えてしまうことに
+    注意が必要です。
+    ```
+    sakura.public_key_path        = File.expand_path("~/.ssh/vagrant.pub")
+    override.ssh.private_key_path = File.expand_path("~/.ssh/vagrant")
+    ```
+
+ 3. Vagrant 付属の "insecure key" をそのまま使う。"insecure key" は安全性に
+    懸念があるため、``sakura.use_insecure_key`` を `true` にセットした時に
+    のみ利用されます。
+    ```
+    sakura.use_insecure_key = true
+    ```
+
 
 ## コマンド
 `sakura-list-id` コマンドを使って、`Vagrantfile` で指定するリソース ID

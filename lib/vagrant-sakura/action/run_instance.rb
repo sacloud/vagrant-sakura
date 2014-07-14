@@ -22,6 +22,8 @@ module VagrantPlugins
           disk_plan = env[:machine].provider_config.disk_plan
           disk_source_archive = env[:machine].provider_config.disk_source_archive
           sshkey_id = env[:machine].provider_config.sshkey_id
+          public_key_path = env[:machine].provider_config.public_key_path
+          use_insecure_key = env[:machine].provider_config.use_insecure_key
 
           env[:ui].info(I18n.t("vagrant_sakura.creating_instance"))
           env[:ui].info(" -- Server Name: #{server_name}")
@@ -97,9 +99,13 @@ module VagrantPlugins
           }
           if sshkey_id
             data["SSHKey"] = { "ID" => sshkey_id }
+          elsif public_key_path
+            data["SSHKey"] = { "PublicKey" => File.read(public_key_path) }
+          elsif use_insecure_key
+            pubkey = Vagrant.source_root.join("keys", "vagrant.pub").read.chomp
+            data["SSHKey"] = { "PublicKey" => pubkey }
           else
-            path = env[:machine].ssh_info[:private_key_path] + '.pub'
-            data["SSHKey"] = { "PublicKey" => File.read(path) }
+            raise 'failsafe'
           end
           response = api.put("/disk/#{diskid}/config", data)
           # Config
