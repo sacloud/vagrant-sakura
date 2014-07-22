@@ -106,7 +106,7 @@ vagrant-sakura では、サーバにログインするための SSH 公開鍵を
 `sakura-list-id` コマンドを使って、`Vagrantfile` で指定するリソース ID
 を調べることができます。
 ```
-$ vagrant sakuara-list-id
+$ vagrant sakura-list-id
 ...
 ```
 
