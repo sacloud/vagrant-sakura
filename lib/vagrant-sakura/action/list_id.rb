@@ -16,7 +16,7 @@ module VagrantPlugins
           puts "%-14s %5s  %s" % ["ID", "Size", "Name"]
           r = api.get("/archive")
           r["Archives"].sort { |a, b|
-            a["DisplayOrder"] <=> b["DisplayOrder"]
+            a["DisplayOrder"].to_i <=> b["DisplayOrder"].to_i
           }.each { |archive|
             gb = archive["SizeMB"] / 1024
             puts "%-14u %3uGB  %s" % [archive["ID"], gb, archive["Name"]]
