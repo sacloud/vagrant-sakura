@@ -20,7 +20,7 @@ module VagrantPlugins
           @https.use_ssl = true
           @https.ca_file = CERTFILE
           @https.verify_mode = OpenSSL::SSL::VERIFY_PEER
-          @https.verify_depth = 2
+          @https.verify_depth = 3
         end
 
         def delete(resource, data = nil)
