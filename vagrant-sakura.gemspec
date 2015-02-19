@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "vagrant-sakura"
   spec.version       = VagrantPlugins::Sakura::VERSION
   spec.authors       = ["Tomoyuki Sahara"]
-  spec.email         = ["sahara@surt.net"]
+  spec.email         = ["sahara@caddr.net"]
   spec.description   = %q{Enables Vagrant to manage machines in Sakura Cloud.}
   spec.summary       = %q{Enables Vagrant to manage machines in Sakura Cloud.}
   spec.homepage      = "https://github.com/tsahara/vagrant-sakura"
