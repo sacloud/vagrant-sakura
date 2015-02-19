@@ -1,3 +1,7 @@
+# 0.0.7 (2015/02/19)
+
+- Update CA certificate for secure.sakura.ad.jp.
+
 # 0.0.6 (2014/07/14)
 
 - Add `public_key_path` and `use_insecure_key` configuration parameters.
