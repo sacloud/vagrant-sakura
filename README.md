@@ -121,7 +121,7 @@ $ vagrant sakura-list-id
 - ``server_name`` - サーバ名
 - ``server_plan`` - 作成するサーバのプラン ID
 - ``sshkey_id`` - サーバへのログインに利用する SSH 公開鍵のリソース ID
-- ``zone_id`` - ゾーン ID (石狩第1=`is1a`, 石狩第2=`is1b`)
+- ``zone_id`` - ゾーン ID (石狩第1=`is1a`, 石狩第2=`is1b`、東京第1=`tk1a`)
 
 ## ネットワーク
 ``vagrant-sakura`` は ``config.vm.network`` を利用したネットワークの構築を
