@@ -16,8 +16,8 @@ module VagrantPlugins
         end
 
         def call(env)
-          server_name = env[:machine].name
-          server_name ||= env[:machine].provider_config.server_name
+          server_name = env[:machine].provider_config.server_name
+          server_name ||= env[:machine].name
           server_plan = env[:machine].provider_config.server_plan
           disk_plan = env[:machine].provider_config.disk_plan
           disk_source_archive = env[:machine].provider_config.disk_source_archive
@@ -44,7 +44,7 @@ module VagrantPlugins
                 "Connection" => "virtio",
                 "SourceArchive" => {
                   "ID" => disk_source_archive
-                } 
+                }
               }
             }
             response = api.post("/disk", data)
