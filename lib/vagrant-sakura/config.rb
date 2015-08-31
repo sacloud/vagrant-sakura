@@ -88,7 +88,7 @@ module VagrantPlugins
         end
 
         if @disk_source_archive == UNSET_VALUE
-          @disk_source_archive = 112500459149 # Ubuntu Server 12.04.3 LTS 64bit
+          @disk_source_archive = 112700643027
         end
 
         @public_key_path = nil if @public_key_path == UNSET_VALUE
