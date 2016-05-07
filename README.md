@@ -64,8 +64,8 @@ end
 そして ``vagrant up --provider=sakrua`` を実行してください。
 
 サーバのディスクソースを ``sakura.disk_source_archive`` で指定しなかった
-場合のデフォルトは ``112700643027`` で
-Ubuntu Server 14.04.2 LTS 64bit
+場合のデフォルトは ``112800438454`` で
+Ubuntu Server 14.04.4 LTS 64bit
 です。
 
 このディスクソースのログインアカウントは ``root`` ではないため、
