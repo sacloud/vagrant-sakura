@@ -1,3 +1,6 @@
+# 0.0.8 (2016/05/12)
+- Update default disk archive.
+
 # 0.0.7 (2015/02/19)
 
 - Update CA certificate for secure.sakura.ad.jp.
