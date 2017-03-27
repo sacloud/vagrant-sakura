@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
 end
 ```
 
-そして ``vagrant up --provider=sakrua`` を実行してください。
+そして ``vagrant up --provider=sakura`` を実行してください。
 
 サーバのディスクソースを ``sakura.disk_source_archive`` で指定しなかった
 場合のデフォルトは ``112800438454`` で
