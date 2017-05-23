@@ -64,7 +64,7 @@ end
 そして ``vagrant up --provider=sakura`` を実行してください。
 
 サーバのディスクソースを ``sakura.disk_source_archive`` で指定しなかった
-場合のデフォルトは ``112800438454`` で
+場合のデフォルトは ``112800520230`` で
 Ubuntu Server 14.04.4 LTS 64bit
 です。
 
@@ -124,7 +124,7 @@ $ vagrant sakura-list-id
 - ``server_name`` - サーバ名
 - ``server_plan`` - 作成するサーバのプラン ID
 - ``sshkey_id`` - サーバへのログインに利用する SSH 公開鍵のリソース ID
-- ``zone_id`` - ゾーン ID (石狩第1=`is1a`, 石狩第2=`is1b`、東京第1=`tk1a`)
+- ``zone_id`` - ゾーン ID (石狩第1=`is1a`, 石狩第2=`is1b`、東京第1=`tk1a`、デフォルトは`is1b`)
 
 ## ネットワーク
 ``vagrant-sakura`` は ``config.vm.network`` を利用したネットワークの構築を
