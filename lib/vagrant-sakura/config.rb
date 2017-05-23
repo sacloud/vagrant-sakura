@@ -56,6 +56,16 @@ module VagrantPlugins
       # The ID of the zone.
       attr_accessor :zone_id
 
+      # The tags of the server and disk.
+      #
+      # @return [Array<String>]
+      attr_accessor :tags
+
+      # The description of the server and disk.
+      #
+      # @return [String]
+      attr_accessor :description
+
       def initialize
         @access_token        = UNSET_VALUE
         @access_token_secret = UNSET_VALUE
@@ -68,6 +78,8 @@ module VagrantPlugins
         @sshkey_id           = UNSET_VALUE
         @use_insecure_key    = UNSET_VALUE
         @zone_id             = UNSET_VALUE
+        @tags                = UNSET_VALUE
+        @description         = UNSET_VALUE
       end
 
       def finalize!
@@ -108,6 +120,13 @@ module VagrantPlugins
         if @zone_id == UNSET_VALUE
           @zone_id = "is1a"  # the first zone
         end
+
+        @tags = [] if @tags == UNSET_VALUE
+        @tags = [@tags] unless @tags.is_a?(Array)
+        @tags.map!(&:to_s)
+
+        @description = "" if @description == UNSET_VALUE
+        @description = @description.to_s
       end
 
       def validate(machine)
