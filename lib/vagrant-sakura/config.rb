@@ -88,7 +88,7 @@ module VagrantPlugins
         end
 
         if @disk_source_archive == UNSET_VALUE
-          @disk_source_archive = 112800438454
+          @disk_source_archive = 112800520230 # Ubuntu Server 14.04.4 LTS 64bit on is1b
         end
 
         @public_key_path = nil if @public_key_path == UNSET_VALUE
@@ -106,7 +106,7 @@ module VagrantPlugins
         @use_insecure_key = false if @use_insecure_key == UNSET_VALUE
 
         if @zone_id == UNSET_VALUE
-          @zone_id = "is1a"  # the first zone
+          @zone_id = "is1b"  # the first zone
         end
       end
 
