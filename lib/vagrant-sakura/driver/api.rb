@@ -53,7 +53,8 @@ module VagrantPlugins
           @logger.debug("#{request.method} #{request.path} #{request.body} "+
                         "=> #{response.code} : #{response.body}")
 
-          emsg = "#{response.code} (#{request.method} #{request.path})"
+          emsg_detail = JSON.pretty_generate JSON.parse(response.body)
+          emsg = "#{response.code} (#{request.method} #{request.path})\n#{emsg_detail}"
           case response.code
           when /2../
             # Success
