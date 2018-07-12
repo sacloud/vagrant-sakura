@@ -126,6 +126,8 @@ $ vagrant sakura-list-id
 - ``disk_source_archive`` - サーバで利用するディスクのベースとするアーカイブ
 - ``server_name`` - サーバ名
 - ``server_plan`` - 作成するサーバのプラン ID
+- ``tags`` - 作成するサーバ/ディスクのタグ(リスト)
+- ``description`` - 作成するサーバ/ディスクの説明
 - ``sshkey_id`` - サーバへのログインに利用する SSH 公開鍵のリソース ID
 - ``zone_id`` - ゾーン ID (石狩第1=`is1a`, 石狩第2=`is1b`、東京第1=`tk1a`、デフォルトは`is1b`)
 

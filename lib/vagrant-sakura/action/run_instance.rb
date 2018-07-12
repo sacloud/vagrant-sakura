@@ -24,12 +24,16 @@ module VagrantPlugins
           sshkey_id = env[:machine].provider_config.sshkey_id
           public_key_path = env[:machine].provider_config.public_key_path
           use_insecure_key = env[:machine].provider_config.use_insecure_key
+          tags = env[:machine].provider_config.tags
+          description = env[:machine].provider_config.description
 
           env[:ui].info(I18n.t("vagrant_sakura.creating_instance"))
           env[:ui].info(" -- Server Name: #{server_name}")
           env[:ui].info(" -- Server Plan: #{server_plan}")
           env[:ui].info(" -- Disk Plan: #{disk_plan}")
           env[:ui].info(" -- Disk Source Archive: #{disk_source_archive}")
+          env[:ui].info(" -- Tags: #{tags}") unless tags.empty?
+          env[:ui].info(" -- Description: \"#{description}\"") unless description.empty?
 
           api = env[:sakura_api]
 
@@ -44,7 +48,9 @@ module VagrantPlugins
                 "Connection" => "virtio",
                 "SourceArchive" => {
                   "ID" => disk_source_archive
-                }
+                },
+                "Tags" => tags,
+                "Description" => description
               }
             }
             response = api.post("/disk", data)
@@ -76,7 +82,9 @@ module VagrantPlugins
               "ServerPlan" => { "ID" => server_plan },
               "ConnectedSwitches" => [
                 { "Scope" => "shared", "BandWidthMbps" => 100 }
-              ]
+              ],
+              "Tags" => tags,
+              "Description" => description
             }
           }
           response = api.post("/server", data)
