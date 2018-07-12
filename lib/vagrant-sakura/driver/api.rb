@@ -49,6 +49,7 @@ module VagrantPlugins
 
         def do_request(request)
           request.basic_auth @access_token, @access_token_secret
+          request['User-Agent'] = "vagrant-sakura/v#{VagrantPlugins::Sakura::VERSION}"
           response = @https.request(request)
           @logger.debug("#{request.method} #{request.path} #{request.body} "+
                         "=> #{response.code} : #{response.body}")
