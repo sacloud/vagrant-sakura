@@ -67,9 +67,11 @@ end
 そして ``vagrant up --provider=sakura`` を実行してください。
 
 サーバのディスクソースを ``sakura.disk_source_archive`` で指定しなかった
-場合のデフォルトは ``112800520230`` で
-Ubuntu Server 14.04.4 LTS 64bit
+場合のデフォルトは ``113000423772`` で
+Ubuntu Server 16.04.4 LTS 64bit(石狩第2ゾーン)
 です。
+
+> ※注: アーカイブのIDはゾーンごとに異なります
 
 このディスクソースのログインアカウントは ``root`` ではないため、
 ``config.ssh.username`` で指定してやる必要があります。
