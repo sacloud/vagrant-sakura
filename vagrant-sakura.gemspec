@@ -6,11 +6,11 @@ require 'vagrant-sakura/version'
 Gem::Specification.new do |spec|
   spec.name          = "vagrant-sakura"
   spec.version       = VagrantPlugins::Sakura::VERSION
-  spec.authors       = ["Tomoyuki Sahara"]
-  spec.email         = ["sahara@caddr.net"]
+  spec.authors       = ["Tomoyuki Sahara", "Kazumichi Yamamoto"]
+  spec.email         = ["yamamoto.febc@gmail.com"]
   spec.description   = %q{Enables Vagrant to manage machines in Sakura Cloud.}
   spec.summary       = %q{Enables Vagrant to manage machines in Sakura Cloud.}
-  spec.homepage      = "https://github.com/tsahara/vagrant-sakura"
+  spec.homepage      = "https://github.com/sacloud/vagrant-sakura"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

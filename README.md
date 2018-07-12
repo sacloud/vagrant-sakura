@@ -2,9 +2,12 @@
 
 [![Gem Version](https://badge.fury.io/rb/vagrant-sakura.png)](http://badge.fury.io/rb/vagrant-sakura)
 
+
 この gem は [Vagrant](http://www.vagrantup.com) に
 [さくらのクラウド](http://cloud.sakura.ad.jp)上のサーバを操作する
 機能を追加する provider です。
+
+> __*このリポジトリは[tsahara/vagrant-sakura](https://github.com/tsahara/vagrant-sakura)から移行されました。*__
 
 ## 機能 / 制限
 
@@ -39,7 +42,7 @@ $ vagrant up --provider=sakura
 まずはじめに、ダミーの box を好きな名前で追加してください:
 
 ```sh
-$ vagrant box add dummy https://github.com/tsahara/vagrant-sakura/raw/master/dummy.box
+$ vagrant box add dummy https://github.com/sacloud/vagrant-sakura/raw/master/dummy.box
 ...
 ```
 
