@@ -85,10 +85,12 @@ module VagrantPlugins
       def finalize!
         if @access_token == UNSET_VALUE
           @access_token = ENV['SAKURA_ACCESS_TOKEN']
+          @access_token = ENV['SAKURACLOUD_ACCESS_TOKEN'] if @access_token.nil?
         end
 
         if @access_token_secret == UNSET_VALUE
           @access_token_secret = ENV['SAKURA_ACCESS_TOKEN_SECRET']
+          @access_token_secret = ENV['SAKURACLOUD_ACCESS_TOKEN_SECRET'] if @access_token_secret.nil?
         end
 
         if @disk_id == UNSET_VALUE
@@ -118,7 +120,8 @@ module VagrantPlugins
         @use_insecure_key = false if @use_insecure_key == UNSET_VALUE
 
         if @zone_id == UNSET_VALUE
-          @zone_id = "is1b"  # the first zone
+          @zone_id = ENV['SAKURACLOUD_ZONE']
+          @zone_id = "is1b" if @zone_id.nil?
         end
 
         @tags = [] if @tags == UNSET_VALUE
