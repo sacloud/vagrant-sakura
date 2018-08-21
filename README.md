@@ -84,7 +84,7 @@ Ubuntu Server 16.04.4 LTS 64bit(石狩第2ゾーン)
  2. さくらのクラウド CLI [Usacloud](https://github.com/sacloud/usacloud)の設定ファイル
  3. 環境変数
 
-> 複数指定した場合はより上に記載されているものが優先されます。
+> 複数指定されている場合はより上に記載されているものが優先されます。
 
 ### 1. Vagrantfileに直接記載
 
@@ -103,8 +103,11 @@ Ubuntu Server 16.04.4 LTS 64bit(石狩第2ゾーン)
 ### 2. さくらのクラウド CLI Usacloudの設定ファイル
 
 [Usacloud](https://github.com/sacloud/usacloud)の設定ファイルを利用する方法です。  
+UsacloudにてAPIキーの設定(`usacloud config`コマンドの実行など)を行なっておけばvagrant-sakura が自動的にUsacloudの設定ファイルを読み込みます。
+この機能を利用すればVagrantfileにAPIキー関連の設定を記載する必要はありません。
+
 デフォルトでは`~/.usacloud/<current_profile>/config.json`ファイルが利用されます。  
-Vagrantfileに`config_path`を指定することで利用する設定ファイルを指定できます。
+任意のUsacloud設定ファイルを利用したい場合、Vagrantfileに`config_path`を指定することで利用する設定ファイルを指定できます。
 
 ```Ruby
   config.vm.provider :sakura do |sakura|
@@ -116,7 +119,7 @@ Vagrantfileに`config_path`を指定することで利用する設定ファイ�
 ### 3. 環境変数
 
 環境変数でAPIキーを指定可能です。  
-Usacloudや[Terraform for さくらのクラウド](https://github.com/sacloud/terraform-provider-sakuracloud)と共通の環境変数を利用できます。  
+Usacloudや[Packer for さくらのクラウド](https://github.com/sacloud/packer-builder-sakuracloud)、[Terraform for さくらのクラウド](https://github.com/sacloud/terraform-provider-sakuracloud)と共通の環境変数を利用できます。  
 
 - API アクセストークン: `SAKURACLOUD_ACCESS_TOKEN` または `SAKURA_ACCESS_TOKEN`
 - API シークレット: `SAKURACLOUD_ACCESS_TOKEN_SECRET` または `SAKURA_ACCESS_TOKEN_SECRET`
