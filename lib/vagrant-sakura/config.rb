@@ -57,6 +57,11 @@ module VagrantPlugins
       # The ID of the zone.
       attr_accessor :zone_id
 
+      # The path of the usacloud config.
+      #
+      # @return [String]
+      attr_accessor :config_path
+
       # The tags of the server and disk.
       #
       # @return [Array<String>]
@@ -79,13 +84,14 @@ module VagrantPlugins
         @sshkey_id           = UNSET_VALUE
         @use_insecure_key    = UNSET_VALUE
         @zone_id             = UNSET_VALUE
+        @config_path         = UNSET_VALUE
         @tags                = UNSET_VALUE
         @description         = UNSET_VALUE
       end
 
       def finalize!
 
-        usacloud_config = get_usacloud_config
+        usacloud_config = get_usacloud_config(@config_path)
 
         if @access_token == UNSET_VALUE
           if usacloud_config.nil?
@@ -190,13 +196,15 @@ module VagrantPlugins
         "default"
       end
 
-      def get_usacloud_config
-        profile_dir = choose_usacloud_profile_dir
-        profile_name = get_usacloud_profile_name
+      def get_usacloud_config(config_path = nil)
+        if config_path.nil? || config_path == UNSET_VALUE
+          profile_dir = choose_usacloud_profile_dir
+          profile_name = get_usacloud_profile_name
 
-        return nil if profile_name.empty?
+          return nil if profile_name.empty?
+          config_path = File.join(profile_dir, profile_name, "config.json")
+        end
 
-        config_path = File.join(profile_dir, profile_name, "config.json")
         if FileTest.exist?(config_path)
           File.open(config_path) do |file|
             begin

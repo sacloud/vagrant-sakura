@@ -118,6 +118,47 @@ module VagrantPlugins
           end
         end
       end
+
+
+      def test_get_usacloud_config_with_path
+        cases = {
+            "config_path is invalid" => {
+                "expect" => nil
+            },
+            "config_path is valid " => {
+                "profile_body" => '{"AccessToken": "token", "AccessTokenSecret": "secret", "Zone": "zone"}',
+                "expect" => {
+                    "AccessToken" => "token",
+                    "AccessTokenSecret" => "secret",
+                    "Zone" => "zone",
+                }
+            },
+        }
+
+
+        Dir.mktmpdir do |dir|
+
+          cases.map do |name, c|
+            conf = Config.new
+            current_file = File.join(dir, ".usacloud", "current")
+            profile_file = File.join(dir, ".usacloud", "default", "config.json")
+
+            FileUtils.mkdir_p(File.dirname(current_file))
+            File.open(current_file, "w") do |file|
+              file.puts "default"
+            end
+
+            if !c["profile_body"].nil?
+              FileUtils.mkdir_p(File.dirname(profile_file))
+              File.open(profile_file, "w") do |file|
+                file.puts c["profile_body"]
+              end
+            end
+
+            assert_equal c["expect"], conf.get_usacloud_config(profile_file)
+          end
+        end
+      end
     end
   end
 end
