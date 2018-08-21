@@ -57,8 +57,8 @@ Vagrant.configure("2") do |config|
   config.ssh.username = "ubuntu"
 
   config.vm.provider :sakura do |sakura|
-    sakura.access_token = 'YOUR ACCESS TOKEN'
-    sakura.access_token_secret = 'YOUR ACCESS TOKEN SECRET'
+    sakura.access_token = '<YOUR ACCESS TOKEN>'
+    sakura.access_token_secret = '<YOUR ACCESS TOKEN SECRET>'
     sakura.use_insecure_key = true
   end
 end
@@ -76,14 +76,55 @@ Ubuntu Server 16.04.4 LTS 64bit(石狩第2ゾーン)
 このディスクソースのログインアカウントは ``root`` ではないため、
 ``config.ssh.username`` で指定してやる必要があります。
 
-なお、さくらのクラウド API を利用するための API キー(ACCESS TOKEN)と
-シークレットトークン(ACCESS TOKEN SECRET)は環境変数
-``SAKURA_ACCESS_TOKEN`` と ``SAKURA_ACCESS_TOKEN_SECRET``で指定することも
-できます。
+## APIキーの指定
+
+さくらのクラウド API を利用するための APIキー(トークン/シークレット/ゾーン)は 以下の3通りの方法で指定できます。
+
+ 1. Vagrantfileに直接記載
+ 2. さくらのクラウド CLI [Usacloud](https://github.com/sacloud/usacloud)の設定ファイル
+ 3. 環境変数
+
+> 複数指定した場合はより上に記載されているものが優先されます。
+
+### 1. Vagrantfileに直接記載
+
+以下のようにVagrantfileに直接記載する方法です。
+
+```Ruby
+  config.vm.provider :sakura do |sakura|
+    sakura.access_token = '<YOUR ACCESS TOKEN>'
+    sakura.access_token_secret = '<YOUR ACCESS TOKEN SECRET>'
+    sakura.zone_id = '< is1a / is1b / tk1a >'
+    
+    # ...
+  end
+```
+
+### 2. さくらのクラウド CLI Usacloudの設定ファイル
+
+[Usacloud](https://github.com/sacloud/usacloud)の設定ファイルを利用する方法です。  
+デフォルトでは`~/.usacloud/<current_profile>/config.json`ファイルが利用されます。  
+Vagrantfileに`config_path`を指定することで利用する設定ファイルを指定できます。
+
+```Ruby
+  config.vm.provider :sakura do |sakura|
+    sakura.config_path = 'your/config/file.json'
+    # ...
+  end
+```
+
+### 3. 環境変数
+
+環境変数でAPIキーを指定可能です。  
+Usacloudや[Terraform for さくらのクラウド](https://github.com/sacloud/terraform-provider-sakuracloud)と共通の環境変数を利用できます。  
+
+- API アクセストークン: `SAKURACLOUD_ACCESS_TOKEN` または `SAKURA_ACCESS_TOKEN`
+- API シークレット: `SAKURACLOUD_ACCESS_TOKEN_SECRET` または `SAKURA_ACCESS_TOKEN_SECRET`
+- ゾーン: `SAKURACLOUD_ZONE`
 
 ## SSH 鍵の指定方法
 
-vagrant-sakura では、サーバにログインするための SSH 公開鍵を 3通りの方法で
+vagrant-sakura では、サーバにログインするための SSH 公開鍵を 以下の3通りの方法で
 設定できます。
 
  1. コントロールパネルで設定済みの SSH 公開鍵をリソース ID で指定する。
@@ -132,6 +173,7 @@ $ vagrant sakura-list-id
 - ``description`` - 作成するサーバ/ディスクの説明
 - ``sshkey_id`` - サーバへのログインに利用する SSH 公開鍵のリソース ID
 - ``zone_id`` - ゾーン ID (石狩第1=`is1a`, 石狩第2=`is1b`、東京第1=`tk1a`、デフォルトは`is1b`)
+- ``config_path`` - APIキーが記載されたUsacloud設定ファイルのパス
 
 ## ネットワーク
 ``vagrant-sakura`` は ``config.vm.network`` を利用したネットワークの構築を
