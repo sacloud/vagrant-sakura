@@ -1,7 +1,8 @@
 # Vagrant Sakura Provider
 
 [![Gem Version](https://badge.fury.io/rb/vagrant-sakura.png)](http://badge.fury.io/rb/vagrant-sakura)
-
+[![Build Status](https://travis-ci.org/sacloud/vagrant-sakura.svg?branch=master)](https://travis-ci.org/sacloud/vagrant-sakura)
+[![Slack](https://slack.usacloud.jp/badge.svg)](https://slack.usacloud.jp/)  
 
 この gem は [Vagrant](http://www.vagrantup.com) に
 [さくらのクラウド](http://cloud.sakura.ad.jp)上のサーバを操作する
