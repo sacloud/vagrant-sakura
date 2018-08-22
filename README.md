@@ -173,6 +173,7 @@ $ vagrant sakura-list-id
 - ``disk_source_archive`` - サーバで利用するディスクのベースとするアーカイブ
 - ``server_name`` - サーバ名
 - ``server_plan`` - 作成するサーバのプラン ID
+- ``packet_filter`` - 作成するサーバに適用するパケットフィルタ ID
 - ``startup_scripts`` - 作成するサーバに適用するスタートアップスクリプト ID(リスト)
 - ``tags`` - 作成するサーバ/ディスクのタグ(リスト)
 - ``description`` - 作成するサーバ/ディスクの説明
