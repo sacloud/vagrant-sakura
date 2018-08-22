@@ -1,4 +1,5 @@
 require "vagrant"
+require "json"
 
 module VagrantPlugins
   module Sakura
@@ -56,6 +57,11 @@ module VagrantPlugins
       # The ID of the zone.
       attr_accessor :zone_id
 
+      # The path of the usacloud config.
+      #
+      # @return [String]
+      attr_accessor :config_path
+
       # The tags of the server and disk.
       #
       # @return [Array<String>]
@@ -78,18 +84,32 @@ module VagrantPlugins
         @sshkey_id           = UNSET_VALUE
         @use_insecure_key    = UNSET_VALUE
         @zone_id             = UNSET_VALUE
+        @config_path         = UNSET_VALUE
         @tags                = UNSET_VALUE
         @description         = UNSET_VALUE
       end
 
       def finalize!
+
+        usacloud_config = get_usacloud_config(@config_path)
+
         if @access_token == UNSET_VALUE
-          @access_token = ENV['SAKURA_ACCESS_TOKEN']
+          if usacloud_config.nil?
+            @access_token = nil
+          else
+            @access_token = usacloud_config["AccessToken"]
+          end
+          @access_token = ENV['SAKURA_ACCESS_TOKEN'] if @access_token.nil?
           @access_token = ENV['SAKURACLOUD_ACCESS_TOKEN'] if @access_token.nil?
         end
 
         if @access_token_secret == UNSET_VALUE
-          @access_token_secret = ENV['SAKURA_ACCESS_TOKEN_SECRET']
+          if usacloud_config.nil?
+            @access_token_secret = nil
+          else
+            @access_token_secret = usacloud_config["AccessTokenSecret"]
+          end
+          @access_token_secret = ENV['SAKURA_ACCESS_TOKEN_SECRET'] if @access_token_secret.nil?
           @access_token_secret = ENV['SAKURACLOUD_ACCESS_TOKEN_SECRET'] if @access_token_secret.nil?
         end
 
@@ -120,7 +140,12 @@ module VagrantPlugins
         @use_insecure_key = false if @use_insecure_key == UNSET_VALUE
 
         if @zone_id == UNSET_VALUE
-          @zone_id = ENV['SAKURACLOUD_ZONE']
+          if usacloud_config.nil?
+            @zone_id = nil
+          else
+            @zone_id = usacloud_config["Zone"]
+          end
+          @zone_id = ENV['SAKURACLOUD_ZONE'] if @zone_id.nil?
           @zone_id = "is1b" if @zone_id.nil?
         end
 
@@ -147,6 +172,51 @@ module VagrantPlugins
         end
 
         { "Sakura Provider" => errors }
+      end
+
+      def choose_usacloud_profile_dir
+        profile_path = ENV.fetch("USACLOUD_PROFILE_DIR", "")
+        if profile_path.empty?
+          File.expand_path("~/.usacloud")
+        else
+          File.join(File.expand_path(profile_path), ".usacloud")
+        end
+      end
+
+      def get_usacloud_profile_name
+        profile_dir = choose_usacloud_profile_dir
+        current_file = File.join(profile_dir, "current")
+
+        return "default" unless FileTest.exist? current_file
+        File.open(current_file) do |file|
+          file.read.split("\n").each do |line|
+            return line
+          end
+        end
+        "default"
+      end
+
+      def get_usacloud_config(config_path = nil)
+        if config_path.nil? || config_path == UNSET_VALUE
+          profile_dir = choose_usacloud_profile_dir
+          profile_name = get_usacloud_profile_name
+
+          return nil if profile_name.empty?
+          config_path = File.join(profile_dir, profile_name, "config.json")
+        end
+
+        if FileTest.exist?(config_path)
+          File.open(config_path) do |file|
+            begin
+              json = JSON.load(file)
+              return json
+            rescue JSON::ParserError
+              return nil
+            end
+          end
+        end
+
+        nil
       end
     end
   end
