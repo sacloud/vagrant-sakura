@@ -24,6 +24,7 @@ module VagrantPlugins
           sshkey_id = env[:machine].provider_config.sshkey_id
           public_key_path = env[:machine].provider_config.public_key_path
           use_insecure_key = env[:machine].provider_config.use_insecure_key
+          packet_filter = env[:machine].provider_config.packet_filter.to_s
           startup_scripts = env[:machine].provider_config.startup_scripts
           tags = env[:machine].provider_config.tags
           description = env[:machine].provider_config.description
@@ -33,6 +34,7 @@ module VagrantPlugins
           env[:ui].info(" -- Server Plan: #{server_plan}")
           env[:ui].info(" -- Disk Plan: #{disk_plan}")
           env[:ui].info(" -- Disk Source Archive: #{disk_source_archive}")
+          env[:ui].info(" -- Packet Filter: #{packet_filter}") unless packet_filter.empty?
           env[:ui].info(" -- Startup Scripts: #{startup_scripts.map {|item| item["ID"]}}") unless startup_scripts.empty?
           env[:ui].info(" -- Tags: #{tags}") unless tags.empty?
           env[:ui].info(" -- Description: \"#{description}\"") unless description.empty?
@@ -93,7 +95,13 @@ module VagrantPlugins
             raise 'no Server ID returned'
           end
           env[:machine].id = serverid = response["Server"]["ID"]
+          interface_id = response["Server"]["Interfaces"][0]["ID"]
           # Server Created
+
+          unless packet_filter.empty?
+            response = api.put("/interface/#{interface_id}/to/packetfilter/#{packet_filter}")
+            # Packet Filter connected to Server
+          end
 
           begin
             response = api.put("/disk/#{diskid}/to/server/#{serverid}")
