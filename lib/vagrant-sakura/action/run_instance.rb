@@ -24,6 +24,7 @@ module VagrantPlugins
           sshkey_id = env[:machine].provider_config.sshkey_id
           public_key_path = env[:machine].provider_config.public_key_path
           use_insecure_key = env[:machine].provider_config.use_insecure_key
+          startup_scripts = env[:machine].provider_config.startup_scripts
           tags = env[:machine].provider_config.tags
           description = env[:machine].provider_config.description
 
@@ -32,6 +33,7 @@ module VagrantPlugins
           env[:ui].info(" -- Server Plan: #{server_plan}")
           env[:ui].info(" -- Disk Plan: #{disk_plan}")
           env[:ui].info(" -- Disk Source Archive: #{disk_source_archive}")
+          env[:ui].info(" -- Startup Scripts: #{startup_scripts.map {|item| item["ID"]}}") unless startup_scripts.empty?
           env[:ui].info(" -- Tags: #{tags}") unless tags.empty?
           env[:ui].info(" -- Description: \"#{description}\"") unless description.empty?
 
@@ -39,7 +41,6 @@ module VagrantPlugins
 
           if env[:machine].provider_config.disk_id
             diskid = env[:machine].provider_config.disk_id
-
           else
             data = {
               "Disk" => {
@@ -103,7 +104,8 @@ module VagrantPlugins
           end
 
           data = {
-            "UserSubnet" => {}
+            "UserSubnet" => {},
+            "Notes" => startup_scripts
           }
           if sshkey_id
             data["SSHKey"] = { "ID" => sshkey_id }
@@ -115,6 +117,7 @@ module VagrantPlugins
           else
             raise 'failsafe'
           end
+
           response = api.put("/disk/#{diskid}/config", data)
           # Config
 

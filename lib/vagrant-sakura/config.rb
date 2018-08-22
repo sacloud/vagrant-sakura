@@ -54,6 +54,11 @@ module VagrantPlugins
       # @return [Boolean]
       attr_accessor :use_insecure_key
 
+      # The startup script IDs of the server.
+      #
+      # @return [Array<String>]
+      attr_accessor :startup_scripts
+
       # The ID of the zone.
       attr_accessor :zone_id
 
@@ -83,6 +88,7 @@ module VagrantPlugins
         @server_plan         = UNSET_VALUE
         @sshkey_id           = UNSET_VALUE
         @use_insecure_key    = UNSET_VALUE
+        @startup_scripts     = UNSET_VALUE
         @zone_id             = UNSET_VALUE
         @config_path         = UNSET_VALUE
         @tags                = UNSET_VALUE
@@ -138,6 +144,10 @@ module VagrantPlugins
         @sshkey_id = nil if @sshkey_id == UNSET_VALUE
 
         @use_insecure_key = false if @use_insecure_key == UNSET_VALUE
+
+        @startup_scripts = [] if @startup_scripts == UNSET_VALUE
+        @startup_scripts = [@startup_scripts] unless @startup_scripts.is_a?(Array)
+        @startup_scripts.map! { |id| {"ID" => id.to_s} }
 
         if @zone_id == UNSET_VALUE
           if usacloud_config.nil?

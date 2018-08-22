@@ -157,6 +157,44 @@ module VagrantPlugins
         end
 
       end
+
+      def test_startup_scripts_handling
+        cases = {
+            "startup_scripts is empty" => {
+                "config" => {},
+                "expects" => {
+                    "startup_scripts" => []
+                }
+            },
+
+            "startup_scripts is a number" => {
+                "config" => {
+                    "startup_scripts" => 999999999999
+                },
+                "expects" => {
+                    "startup_scripts" => [{"ID" => "999999999999"}]
+                }
+            },
+
+            "startup_scripts is array" => {
+                "config" => {
+                    "startup_scripts" => [999999999999,888888888888]
+                },
+                "expects" => {
+                    "startup_scripts" => [{"ID" => "999999999999"}, {"ID" => "888888888888"}]
+                }
+            },
+        }
+
+        cases.map do |name, c|
+          conf = Config.new
+          conf.set_options c["config"]
+          conf.finalize!
+
+          assert_equal c["expects"]["startup_scripts"], conf.startup_scripts
+        end
+
+      end
     end
   end
 end
