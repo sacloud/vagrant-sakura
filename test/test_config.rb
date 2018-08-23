@@ -195,6 +195,45 @@ module VagrantPlugins
         end
 
       end
+
+      def test_disk_source_mode
+        cases = {
+            "mode is :disk" => {
+                "config" => {
+                    "disk_id" => 999999999999
+                },
+                "expect" => :disk
+            },
+
+            "mode is :archive" => {
+                "config" => {
+                    "disk_source_archive" => 999999999999
+                },
+                "expect" => :archive
+            },
+
+            "mode is :os_type" => {
+                "config" => {
+                    "os_type" => "centos"
+                },
+                "expect" => :os_type
+            },
+
+            "mode is :os_type with defaults" => {
+                "config" => {},
+                "expect" => :os_type
+            },
+        }
+
+        cases.map do |name, c|
+          conf = Config.new
+          conf.set_options c["config"]
+          conf.finalize!
+
+          assert_equal c["expect"], conf.disk_source_mode
+        end
+      end
+
     end
   end
 end
