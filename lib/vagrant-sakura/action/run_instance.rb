@@ -20,6 +20,8 @@ module VagrantPlugins
           server_name ||= env[:machine].name
           server_plan = env[:machine].provider_config.server_plan
           disk_plan = env[:machine].provider_config.disk_plan
+          disk_source_mode = env[:machine].provider_config.disk_source_mode
+          os_type = env[:machine].provider_config.os_type
           disk_source_archive = env[:machine].provider_config.disk_source_archive
           sshkey_id = env[:machine].provider_config.sshkey_id
           public_key_path = env[:machine].provider_config.public_key_path
@@ -33,6 +35,7 @@ module VagrantPlugins
           env[:ui].info(" -- Server Name: #{server_name}")
           env[:ui].info(" -- Server Plan: #{server_plan}")
           env[:ui].info(" -- Disk Plan: #{disk_plan}")
+          env[:ui].info(" -- Disk Source OS Type: #{os_type}") if os_type
           env[:ui].info(" -- Disk Source Archive: #{disk_source_archive}")
           env[:ui].info(" -- Packet Filter: #{packet_filter}") unless packet_filter.empty?
           env[:ui].info(" -- Startup Scripts: #{startup_scripts.map {|item| item["ID"]}}") unless startup_scripts.empty?

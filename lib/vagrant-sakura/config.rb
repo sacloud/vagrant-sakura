@@ -1,11 +1,10 @@
 require "vagrant"
 require "json"
+require "vagrant-sakura/os_type"
 
 module VagrantPlugins
   module Sakura
     class Config < Vagrant.plugin("2", :config)
-
-      OS_TYPES = %w(centos centos6 ubuntu debian coreos rancheros freebsd)
 
       # The ACCESS TOKEN to access Sakura Cloud API.
       #
@@ -207,7 +206,7 @@ module VagrantPlugins
           errors << I18n.t("vagrant_sakura.config.need_ssh_key_config")
         end
 
-        if not OS_TYPES.include? @os_type
+        if not VagrantPlugins::Sakura::OSType::os_types.include? @os_type
           errors << I18n.t("vagrant_sakura.config.need_valid_os_type")
         end
 
