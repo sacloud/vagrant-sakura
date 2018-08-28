@@ -234,6 +234,37 @@ module VagrantPlugins
         end
       end
 
+      def test_os_type
+        cases = {
+            "os_type is valid" => {
+                "config" => {
+                    "use_insecure_key" => true,
+                    "os_type" => "ubuntu"
+                },
+                "expect" => true
+            },
+
+            "os_type is invalid" => {
+                "config" => {
+                    "use_insecure_key" => true,
+                    "os_type" => "invalid",
+                },
+                "expect" => false
+            },
+        }
+
+        cases.map do |name, c|
+          conf = Config.new
+          conf.set_options c["config"]
+          conf.finalize!
+
+          res = conf.validate(nil)
+
+          assert_equal c["expect"], res["Sakura Provider"].empty?
+        end
+      end
+
+
     end
   end
 end
