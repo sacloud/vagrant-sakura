@@ -48,3 +48,5 @@ en:
         An access token secret is required via "access_token_secret"
       need_ssh_key_config: |-
         You must set one of "sshkey_id", "pubic_key_path", or "use_insecure_key".
+      need_valid_os_type: |-
+        You must set valid os_type value.

@@ -30,8 +30,9 @@ module VagrantPlugins
         end
 
         def get(resource, data = nil)
-          request = Net::HTTP::Get.new(@prefix + resource)
-          request.body = data.to_json if data
+          uri = URI.parse(@prefix + resource)
+          uri.query = data.to_json if data
+          request = Net::HTTP::Get.new uri.to_s
           do_request request
         end
 

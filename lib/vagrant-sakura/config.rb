@@ -1,9 +1,11 @@
 require "vagrant"
 require "json"
+require "vagrant-sakura/os_type"
 
 module VagrantPlugins
   module Sakura
     class Config < Vagrant.plugin("2", :config)
+
       # The ACCESS TOKEN to access Sakura Cloud API.
       #
       # @return [String]
@@ -28,6 +30,11 @@ module VagrantPlugins
       #
       # @return [String]
       attr_accessor :disk_source_archive
+
+      # The source archive os-type.
+      #
+      # @return [String]
+      attr_accessor :os_type
 
       # The pathname of the SSH public key to register on the server.
       #
@@ -88,6 +95,7 @@ module VagrantPlugins
         @disk_id             = UNSET_VALUE
         @disk_plan           = UNSET_VALUE
         @disk_source_archive = UNSET_VALUE
+        @os_type             = UNSET_VALUE
         @public_key_path     = UNSET_VALUE
         @server_name         = UNSET_VALUE
         @server_plan         = UNSET_VALUE
@@ -99,6 +107,13 @@ module VagrantPlugins
         @config_path         = UNSET_VALUE
         @tags                = UNSET_VALUE
         @description         = UNSET_VALUE
+      end
+
+      # @return one of [:disk, :archive, :os_type]
+      def disk_source_mode
+        return :disk unless @disk_id.to_s.empty?
+        return :archive unless @disk_source_archive.to_s.empty?
+        :os_type
       end
 
       def finalize!
@@ -133,8 +148,10 @@ module VagrantPlugins
           @disk_plan = 4  # SSD
         end
 
-        if @disk_source_archive == UNSET_VALUE
-          @disk_source_archive = 113000423772 # Ubuntu Server 16.04.4 LTS 64bit on is1b
+        @disk_source_archive = nil if @disk_source_archive == UNSET_VALUE
+        @os_type = nil if @os_type == UNSET_VALUE
+        if @disk_source_archive.to_s.empty? && @os_type.to_s.empty?
+          @os_type = "ubuntu"
         end
 
         @public_key_path = nil if @public_key_path == UNSET_VALUE
@@ -187,6 +204,10 @@ module VagrantPlugins
 
         if not (@sshkey_id or @public_key_path or @use_insecure_key)
           errors << I18n.t("vagrant_sakura.config.need_ssh_key_config")
+        end
+
+        if not VagrantPlugins::Sakura::OSType::os_types.include? @os_type
+          errors << I18n.t("vagrant_sakura.config.need_valid_os_type")
         end
 
         { "Sakura Provider" => errors }

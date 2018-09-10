@@ -134,6 +134,7 @@ module VagrantPlugins
           b.use HandleBox
           b.use ConfigValidate
           b.use ConnectSakura
+          b.use CompleteArchiveId
           b.use Call, ReadState do |env, b2|
             case env[:machine_state_id]
             when :up
@@ -150,6 +151,7 @@ module VagrantPlugins
       end
 
       action_root = Pathname.new(File.expand_path("../action", __FILE__))
+      autoload :CompleteArchiveId, action_root.join("complete_archive_id")
       autoload :ConnectSakura, action_root.join("connect_sakura")
       autoload :DeleteServer, action_root.join("delete_server")
       autoload :IsCreated, action_root.join("is_created")
