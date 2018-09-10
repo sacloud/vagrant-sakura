@@ -174,6 +174,7 @@ $ vagrant sakura-list-id
 |`centos`|`root`| - |
 |`centos6`|`root`| - |
 |`debian`|`root`| - |
+|`coreos`|`root`| - |
 |`freebsd`|`root`| - |
 |`rancheros`|`rancher`| メモリ2GB以上のプランが必要 |
 
