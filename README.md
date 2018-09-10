@@ -169,15 +169,15 @@ $ vagrant sakura-list-id
 - ``os_type`` - サーバで利用するディスクのベースとするアーカイブの種別 (※ `disk_source_archive`とは同時に指定できません)  
 指定可能な値は以下の通りです。  
 
-|指定可能な値|SSHユーザー名|備考|
-|---|---|---|
-|`ubuntu`(デフォルト)|`ubuntu`| - |
-|`centos`|`root`| - |
-|`centos6`|`root`| - |
-|`debian`|`root`| - |
-|`coreos`|`core`| - |
-|`freebsd`|`root`| - |
-|`rancheros`|`rancher`| メモリ2GB以上のプランが必要 |
+|指定可能な値|SSHユーザー名|Vagrantfileの例|備考|
+|---|---|:---:|---|
+|`ubuntu`(デフォルト)|`ubuntu`| [example](examples/ubuntu.md) | - |
+|`centos`|`root`| [example](examples/centos.md) | - |
+|`centos6`|`root`| [example](examples/centos6.md) | - |
+|`debian`|`root`| [example](examples/debian.md) | - |
+|`coreos`|`core`| [example](examples/coreos.md) | - |
+|`freebsd`|`root`| [example](examples/freebsd.md) | - |
+|`rancheros`|`rancher`| [example](examples/rancheros.md) | メモリ2GB以上のプランが必要 |
 
 - ``disk_source_archive`` - サーバで利用するディスクのベースとするアーカイブのID (※`os_type`とは同時に指定できません)
 - ``server_name`` - サーバ名
