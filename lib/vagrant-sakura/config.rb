@@ -61,6 +61,11 @@ module VagrantPlugins
       # @return [Boolean]
       attr_accessor :use_insecure_key
 
+      # Enable password auth to connecting via ssh.
+      #
+      # @return [Boolean]
+      attr_accessor :enable_pw_auth
+
       # The packet filter ID of the server's first NIC.
       #
       # @return [String]
@@ -101,6 +106,7 @@ module VagrantPlugins
         @server_plan         = UNSET_VALUE
         @sshkey_id           = UNSET_VALUE
         @use_insecure_key    = UNSET_VALUE
+        @enable_pw_auth      = UNSET_VALUE
         @packet_filter       = UNSET_VALUE
         @startup_scripts     = UNSET_VALUE
         @zone_id             = UNSET_VALUE
@@ -167,6 +173,7 @@ module VagrantPlugins
         @sshkey_id = nil if @sshkey_id == UNSET_VALUE
 
         @use_insecure_key = false if @use_insecure_key == UNSET_VALUE
+        @enable_pw_auth = false if @enable_pw_auth == UNSET_VALUE
 
         @packet_filter = "" if @packet_filter == UNSET_VALUE
 

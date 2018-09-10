@@ -21,6 +21,7 @@ module VagrantPlugins
           sshkey_id = env[:machine].provider_config.sshkey_id
           public_key_path = env[:machine].provider_config.public_key_path
           use_insecure_key = env[:machine].provider_config.use_insecure_key
+          enable_pw_auth = env[:machine].provider_config.enable_pw_auth
           startup_scripts = env[:machine].provider_config.startup_scripts
 
           api = env[:sakura_api]
@@ -68,8 +69,9 @@ module VagrantPlugins
          end
 
           data = {
-            "UserSubnet" => {},
-            "Notes" => startup_scripts
+              "UserSubnet" => {},
+              "Notes" => startup_scripts,
+              "DisablePWAuth" => !enable_pw_auth
           }
           if sshkey_id
             data["SSHKey"] = { "ID" => sshkey_id }
