@@ -196,6 +196,7 @@ $ vagrant sakura-list-id
 - ``server_plan`` - 作成するサーバのプラン ID
 - ``packet_filter`` - 作成するサーバに適用するパケットフィルタ ID
 - ``startup_scripts`` - 作成するサーバに適用するスタートアップスクリプト ID(リスト)
+- ``enable_pw_auth`` - パスワード認証の有効化(デフォルト: `false`)
 - ``tags`` - 作成するサーバ/ディスクのタグ(リスト)
 - ``description`` - 作成するサーバ/ディスクの説明
 - ``sshkey_id`` - サーバへのログインに利用する SSH 公開鍵のリソース ID
