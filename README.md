@@ -67,10 +67,11 @@ end
 
 そして ``vagrant up --provider=sakura`` を実行してください。
 
-サーバのディスクソース(OS)は ``sakura.disk_source_archive`` または``sakura.os_type``で指定します。
+サーバのディスクソース(OS)は ``sakura.disk_source_archive`` または``sakura.os_type``で指定します。  
 デフォルトでは``sakura.os_type="ubuntu"``となっています。
 
-> 注: ディスクソースに指定するOSに応じて`config.ssh.username`を適切に指定する必要があります。詳細は`os_type`の説明を参照してください。
+> 注: ディスクソースに指定するOSに応じて`config.ssh.username`を適切に指定する必要があります。  
+詳細は`os_type`の説明を参照してください。
 
 ## APIキーの指定
 
