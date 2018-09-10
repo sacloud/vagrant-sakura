@@ -8,6 +8,8 @@ en:
       Warning! You are using insecure default key to login to the server on
       Sakura-no-cloud.  The key is publicly available (bundled in Vagrant
       distribution) so malicious people can login to your server.
+    reinstalling_disk: |-
+      Re-installing a disk with the following settings...
     down: |-
       The server is down.
     not_created: |-
