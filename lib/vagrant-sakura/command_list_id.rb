@@ -1,6 +1,6 @@
 module VagrantPlugins
   module Sakura
-    class Command < Vagrant.plugin(2, :command)
+    class CommandListId < Vagrant.plugin(2, :command)
       def self.synopsis
         "query Sakura for available archives and server plans"
       end

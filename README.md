@@ -152,6 +152,18 @@ vagrant-sakura では、サーバにログインするための SSH 公開鍵を
 
 
 ## コマンド
+
+#### OSの再インストール
+
+`sakura-reinstall` コマンドを使って、ディスクに対しOSの再インストールを行うことができます。
+
+```
+$ vagrant sakura-reinstall
+...
+```
+
+#### 各種IDの一覧表示
+
 `sakura-list-id` コマンドを使って、`Vagrantfile` で指定するリソース ID
 を調べることができます。
 ```

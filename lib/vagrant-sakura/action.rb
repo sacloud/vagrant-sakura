@@ -35,6 +35,27 @@ module VagrantPlugins
         end
       end
 
+      def self.action_reinstall
+        Vagrant::Action::Builder.new.tap do |b|
+          b.use ConfigValidate
+          b.use ConnectSakura
+          b.use CompleteArchiveId
+          b.use Call, ReadState do |env, b2|
+            case env[:machine_state_id]
+            when :up
+              b2.use Halt
+              b2.use Reinstall
+              b2.use Provision
+            when :down, :cleaning
+              b2.use Reinstall
+              b2.use Provision
+            when :not_created
+              b2.use MessageNotCreated
+          end
+          end
+        end
+      end
+
       def self.action_list_id
         Vagrant::Action::Builder.new.tap do |b|
           b.use ConfigValidate
@@ -164,6 +185,7 @@ module VagrantPlugins
       autoload :PowerOn, action_root.join("power_on")
       autoload :ReadSSHInfo, action_root.join("read_ssh_info")
       autoload :ReadState, action_root.join("read_state")
+      autoload :Reinstall, action_root.join("reinstall")
       autoload :Reset, action_root.join("reset")
       autoload :RunInstance, action_root.join("run_instance")
       autoload :SyncFolders, action_root.join("sync_folders")

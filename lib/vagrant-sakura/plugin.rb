@@ -23,9 +23,14 @@ module VagrantPlugins
         Provider
       end
 
+      command(:'sakura-reinstall') do
+        require_relative "command_reinstall"
+        CommandReinstall
+      end
+
       command(:'sakura-list-id') do
-        require_relative "command"
-        Command
+        require_relative "command_list_id"
+        CommandListId
       end
 
       def self.setup_i18n
