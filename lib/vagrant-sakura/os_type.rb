@@ -17,6 +17,9 @@ module VagrantPlugins
           "coreos" => {
               "Tags.Name" => [%w(current-stable distro-coreos)]
           },
+          "rancheros" => {
+              "Tags.Name" => [%w(current-stable distro-rancheros)]
+          },
           "freebsd" => {
               "Tags.Name" => [%w(current-stable distro-freebsd)]
           },
