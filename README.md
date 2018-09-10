@@ -67,15 +67,10 @@ end
 
 そして ``vagrant up --provider=sakura`` を実行してください。
 
-サーバのディスクソースを ``sakura.disk_source_archive`` で指定しなかった
-場合のデフォルトは ``113000423772`` で
-Ubuntu Server 16.04.4 LTS 64bit(石狩第2ゾーン)
-です。
+サーバのディスクソース(OS)は ``sakura.disk_source_archive`` または``sakura.os_type``で指定します。
+デフォルトでは``sakura.os_type="ubuntu"``となっています。
 
-> ※注: アーカイブのIDはゾーンごとに異なります
-
-このディスクソースのログインアカウントは ``root`` ではないため、
-``config.ssh.username`` で指定してやる必要があります。
+> 注: ディスクソースに指定するOSに応じて`config.ssh.username`を適切に指定する必要があります。詳細は`os_type`の説明を参照してください。
 
 ## APIキーの指定
 
@@ -170,7 +165,19 @@ $ vagrant sakura-list-id
 - ``access_token`` - さくらのクラウド API にアクセスするための API キー
 - ``access_token_secret`` - API キーのシークレットトークン
 - ``disk_plan`` - サーバで利用するディスクのプラン ID
-- ``disk_source_archive`` - サーバで利用するディスクのベースとするアーカイブ
+- ``os_type`` - サーバで利用するディスクのベースとするアーカイブの種別 (※ `disk_source_archive`とは同時に指定できません)  
+指定可能な値は以下の通りです。  
+
+|指定可能な値|SSHユーザー名|備考|
+|---|---|---|
+|`ubuntu`(デフォルト)|`ubuntu`| - |
+|`centos`|`root`| - |
+|`centos6`|`root`| - |
+|`debian`|`root`| - |
+|`freebsd`|`root`| - |
+|`rancheros`|`rancher`| メモリ2GB以上のプランが必要 |
+
+- ``disk_source_archive`` - サーバで利用するディスクのベースとするアーカイブのID (※`os_type`とは同時に指定できません)
 - ``server_name`` - サーバ名
 - ``server_plan`` - 作成するサーバのプラン ID
 - ``packet_filter`` - 作成するサーバに適用するパケットフィルタ ID
