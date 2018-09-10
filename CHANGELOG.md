@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 0.1.0 (2018/09/10)
+
+- Use usacloud config (#28)
+- Use TravisCI (#29)
+- Add startup script config (#31)
+- Add packer filter config (#32)
+- Add os_type config (#33)
+- Add sakura-reinstall command (#36)
+- Add enable_pw_auth config (#37)
+
 ## 0.0.9 (2018/07/13)
 
 ### General
