@@ -184,6 +184,8 @@ $ vagrant sakura-list-id
 |指定可能な値|SSHユーザー名|Vagrantfileの例|備考|
 |---|---|:---:|---|
 |`ubuntu`(デフォルト)|`ubuntu`| [example](examples/ubuntu.md) | - |
+|`ubuntu-18.04`|`ubuntu`| - | - |
+|`ubuntu-16.04`|`ubuntu`| - | - |
 |`centos`|`root`| [example](examples/centos.md) | - |
 |`centos6`|`root`| [example](examples/centos6.md) | - |
 |`debian`|`root`| [example](examples/debian.md) | - |

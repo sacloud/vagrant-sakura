@@ -11,6 +11,12 @@ module VagrantPlugins
           "ubuntu" => {
               "Tags.Name" => [%w(current-stable distro-ubuntu)]
           },
+          "ubuntu-16.04" => {
+              "Tags.Name" => [%w(distro-ubuntu distro-ver-16.04.4)]
+          },
+          "ubuntu-18.04" => {
+              "Tags.Name" => [%w(distro-ubuntu distro-ver-18.04)]
+          },
           "debian" => {
               "Tags.Name" => [%w(current-stable distro-debian)]
           },
