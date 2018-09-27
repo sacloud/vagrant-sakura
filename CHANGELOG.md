@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.1 (2018/09/27)
+
+- Re-released due to maintainer's error.  This release as the same commit as v0.2.0.
+
 ## 0.2.0 (2018/09/27)
 
 - Add new os_type options: ubuntu-16.04, ubuntu-18.04 (#38)
