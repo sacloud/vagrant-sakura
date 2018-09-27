@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.0 (2018/09/27)
+
+- Add new os_type options: ubuntu-16.04, ubuntu-18.04 (#38)
+
 ## 0.1.0 (2018/09/10)
 
 - Use usacloud config (#28)
