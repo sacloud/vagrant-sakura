@@ -19,8 +19,9 @@ module VagrantPlugins
           server_name = env[:machine].provider_config.server_name
           server_name ||= env[:machine].name
           server_plan = env[:machine].provider_config.server_plan
+          server_core = env[:machine].provider_config.server_core
+          server_memory = env[:machine].provider_config.server_memory
           disk_plan = env[:machine].provider_config.disk_plan
-          disk_source_mode = env[:machine].provider_config.disk_source_mode
           os_type = env[:machine].provider_config.os_type
           disk_source_archive = env[:machine].provider_config.disk_source_archive
           sshkey_id = env[:machine].provider_config.sshkey_id
@@ -34,7 +35,12 @@ module VagrantPlugins
 
           env[:ui].info(I18n.t("vagrant_sakura.creating_instance"))
           env[:ui].info(" -- Server Name: #{server_name}")
-          env[:ui].info(" -- Server Plan: #{server_plan}")
+          if server_plan
+            env[:ui].info(" -- Server Plan: #{server_plan}")
+          else
+            env[:ui].info(" -- Server Core: #{server_core}")
+            env[:ui].info(" -- Server Memory: #{server_memory}")
+          end
           env[:ui].info(" -- Disk Plan: #{disk_plan}")
           env[:ui].info(" -- Disk Source OS Type: #{os_type}") if os_type
           env[:ui].info(" -- Disk Source Archive: #{disk_source_archive}")
@@ -45,8 +51,55 @@ module VagrantPlugins
 
           api = env[:sakura_api]
 
+          data = {
+              "Server" => {
+                  "Name" => server_name,
+                  "ServerPlan" => { "ID" => server_plan },
+                  "ConnectedSwitches" => [
+                      { "Scope" => "shared", "BandWidthMbps" => 100 }
+                  ],
+                  "Tags" => tags,
+                  "Description" => description
+              }
+          }
+          if server_plan
+            data["Server"]["ServerPlan"] = { "ID" => server_plan }
+          else
+            data["Server"]["ServerPlan"] = {
+                "CPU" => server_core,
+                "MemoryMB" => server_memory * 1024
+            }
+          end
+          unless env[:machine].provider_config.disk_id
+            data["Server"]["WaitDiskMigration"] = true
+          end
+
+          response = api.post("/server", data)
+          unless response["Server"]["ID"]
+            raise 'no Server ID returned'
+          end
+          env[:machine].id = serverid = response["Server"]["ID"]
+          interface_id = response["Server"]["Interfaces"][0]["ID"]
+          # Server Created
+
+          unless packet_filter.empty?
+            response = api.put("/interface/#{interface_id}/to/packetfilter/#{packet_filter}")
+            # Packet Filter connected to Server
+          end
+
           if env[:machine].provider_config.disk_id
             diskid = env[:machine].provider_config.disk_id
+
+            begin
+              response = api.put("/disk/#{diskid}/to/server/#{serverid}")
+                # Disk mounted to Server
+            rescue VagrantPlugins::Sakura::Driver::NotFoundError
+              terminate(env)
+              raise
+            end
+
+            # Power On
+            response = api.put("/server/#{serverid}/power")
           else
             data = {
               "Disk" => {
@@ -56,10 +109,32 @@ module VagrantPlugins
                 "SourceArchive" => {
                   "ID" => disk_source_archive
                 },
+                "Server" => {
+                    "ID" => serverid
+                },
                 "Tags" => tags,
                 "Description" => description
-              }
+              },
+              "BootAtAvailable" => true
             }
+
+            config = {
+                "UserSubnet" => {},
+                "Notes" => startup_scripts,
+                "DisablePWAuth" => !enable_pw_auth
+            }
+            if sshkey_id
+              config["SSHKey"] = { "ID" => sshkey_id }
+            elsif public_key_path
+              config["SSHKey"] = { "PublicKey" => File.read(public_key_path) }
+            elsif use_insecure_key
+              pubkey = Vagrant.source_root.join("keys", "vagrant.pub").read.chomp
+              config["SSHKey"] = { "PublicKey" => pubkey }
+            else
+              raise 'failsafe'
+            end
+            data["Config"] = config
+
             response = api.post("/disk", data)
             unless response["Disk"]["ID"]
               raise 'no Disk ID returned'
@@ -83,59 +158,6 @@ module VagrantPlugins
             end
           end
 
-          data = {
-            "Server" => {
-              "Name" => server_name,
-              "ServerPlan" => { "ID" => server_plan },
-              "ConnectedSwitches" => [
-                { "Scope" => "shared", "BandWidthMbps" => 100 }
-              ],
-              "Tags" => tags,
-              "Description" => description
-            }
-          }
-          response = api.post("/server", data)
-          unless response["Server"]["ID"]
-            raise 'no Server ID returned'
-          end
-          env[:machine].id = serverid = response["Server"]["ID"]
-          interface_id = response["Server"]["Interfaces"][0]["ID"]
-          # Server Created
-
-          unless packet_filter.empty?
-            response = api.put("/interface/#{interface_id}/to/packetfilter/#{packet_filter}")
-            # Packet Filter connected to Server
-          end
-
-          begin
-            response = api.put("/disk/#{diskid}/to/server/#{serverid}")
-            # Disk mounted to Server
-          rescue VagrantPlugins::Sakura::Driver::NotFoundError
-            terminate(env)
-            raise
-          end
-
-          data = {
-            "UserSubnet" => {},
-            "Notes" => startup_scripts,
-            "DisablePWAuth" => !enable_pw_auth
-          }
-          if sshkey_id
-            data["SSHKey"] = { "ID" => sshkey_id }
-          elsif public_key_path
-            data["SSHKey"] = { "PublicKey" => File.read(public_key_path) }
-          elsif use_insecure_key
-            pubkey = Vagrant.source_root.join("keys", "vagrant.pub").read.chomp
-            data["SSHKey"] = { "PublicKey" => pubkey }
-          else
-            raise 'failsafe'
-          end
-
-          response = api.put("/disk/#{diskid}/config", data)
-          # Config
-
-          response = api.put("/server/#{serverid}/power")
-          # Power On
 
           if !env[:interrupted]
             # Wait for SSH to be ready.
