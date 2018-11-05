@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.0 (2018/11/5)
+
+- Use new disk-edit API (#40)
+
 ## 0.2.1 (2018/09/27)
 
 - Re-released due to maintainer's error.  This release as the same commit as v0.2.0.
