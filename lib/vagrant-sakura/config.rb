@@ -47,9 +47,22 @@ module VagrantPlugins
       attr_accessor :server_name
 
       # The Plan ID of the server.
-      # 
+      #
+      # @deprecated Use {#server_core} and {#server_memory} instead.
       # @return [Fixnum]
       attr_accessor :server_plan
+
+      # The number of cores.
+      #
+      # @return [Fixnum]
+      attr_accessor :server_core
+
+      # The number of memories.
+      # unit: GB
+      #
+      # @deprecated Use {#server_core} and {#server_memory} instead.
+      # @return [Fixnum]
+      attr_accessor :server_memory
 
       # The resource ID of the SSH public key to login the server.
       # 
@@ -104,6 +117,8 @@ module VagrantPlugins
         @public_key_path     = UNSET_VALUE
         @server_name         = UNSET_VALUE
         @server_plan         = UNSET_VALUE
+        @server_core         = UNSET_VALUE
+        @server_memory       = UNSET_VALUE
         @sshkey_id           = UNSET_VALUE
         @use_insecure_key    = UNSET_VALUE
         @enable_pw_auth      = UNSET_VALUE
@@ -167,7 +182,13 @@ module VagrantPlugins
         end
 
         if @server_plan == UNSET_VALUE
-          @server_plan = 1001  # 1Core-1GB - cheapest
+          @server_plan = nil
+        end
+        if @server_core == UNSET_VALUE
+          @server_core = 1
+        end
+        if @server_memory == UNSET_VALUE
+          @server_memory = 1
         end
 
         @sshkey_id = nil if @sshkey_id == UNSET_VALUE

@@ -195,7 +195,9 @@ $ vagrant sakura-list-id
 
 - ``disk_source_archive`` - サーバで利用するディスクのベースとするアーカイブのID (※`os_type`とは同時に指定できません)
 - ``server_name`` - サーバ名
-- ``server_plan`` - 作成するサーバのプラン ID
+- ``server_plan`` - 作成するサーバのプラン ID(**非推奨** 代わりに`server_core`と`server_memory`を利用してください)
+- ``server_core`` - 作成するサーバのコア数(デフォルト: `1`)
+- ``server_memory`` - 作成するサーバのメモリサイズ(GB単位、デフォルト: `1`)
 - ``packet_filter`` - 作成するサーバに適用するパケットフィルタ ID
 - ``startup_scripts`` - 作成するサーバに適用するスタートアップスクリプト ID(リスト)
 - ``enable_pw_auth`` - パスワード認証の有効化(デフォルト: `false`)
