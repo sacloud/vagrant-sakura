@@ -6,7 +6,6 @@ module VagrantPlugins
   module Sakura
     module Driver
       APIHOST   = "secure.sakura.ad.jp"
-      CERTFILE = File.expand_path("../cert.pem", __FILE__)
 
       class API
         def initialize(access_token, access_token_secret, zone_id)
@@ -18,7 +17,6 @@ module VagrantPlugins
 
           @https = Net::HTTP.new(APIHOST, 443)
           @https.use_ssl = true
-          @https.ca_file = CERTFILE
           @https.verify_mode = OpenSSL::SSL::VERIFY_PEER
           @https.verify_depth = 3
         end
