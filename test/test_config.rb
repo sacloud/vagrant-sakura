@@ -251,6 +251,22 @@ module VagrantPlugins
                 },
                 "expect" => false
             },
+
+            "os_type is empty with archive_id" => {
+                "config" => {
+                    "use_insecure_key" => true,
+                    "disk_source_archive" => "999999999999"
+                },
+                "expect" => true
+            },
+
+            "os_type is empty with disk_id" => {
+                "config" => {
+                    "use_insecure_key" => true,
+                    "disk_id" => "999999999999"
+                },
+                "expect" => true
+            },
         }
 
         cases.map do |name, c|

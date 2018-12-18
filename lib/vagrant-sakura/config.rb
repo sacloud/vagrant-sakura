@@ -234,8 +234,10 @@ module VagrantPlugins
           errors << I18n.t("vagrant_sakura.config.need_ssh_key_config")
         end
 
-        if not VagrantPlugins::Sakura::OSType::os_types.include? @os_type
-          errors << I18n.t("vagrant_sakura.config.need_valid_os_type")
+        if disk_source_mode == :os_type
+          if not VagrantPlugins::Sakura::OSType::os_types.include? @os_type
+            errors << I18n.t("vagrant_sakura.config.need_valid_os_type")
+          end
         end
 
         { "Sakura Provider" => errors }
