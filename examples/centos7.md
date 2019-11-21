@@ -1,4 +1,4 @@
-# Vagrantfileの例(CentOS最新安定板を利用する場合)
+# Vagrantfileの例(CentOS7を利用する場合)
 
 ```bash
 Vagrant.configure("2") do |config|
@@ -6,7 +6,7 @@ Vagrant.configure("2") do |config|
   config.ssh.username = "root"
 
   config.vm.provider :sakura do |sakura, override|
-    sakura.os_type = "centos"
+    sakura.os_type = "centos7"
     
     sakura.public_key_path        = File.expand_path("~/.ssh/id_rsa.pub")
     override.ssh.private_key_path = File.expand_path("~/.ssh/id_rsa")
