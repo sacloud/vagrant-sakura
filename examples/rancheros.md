@@ -8,7 +8,10 @@ Vagrant.configure("2") do |config|
 
   config.vm.provider :sakura do |sakura, override|
     sakura.os_type = "rancheros"
-    sakura.server_plan = 4002 # 2core/4GBメモリ プラン
+    
+    # 2core/4GBメモリ プラン
+    sakura.server_core = 2 
+    sakura.server_memory = 4 
     
     sakura.public_key_path        = File.expand_path("~/.ssh/id_rsa.pub")
     override.ssh.private_key_path = File.expand_path("~/.ssh/id_rsa")

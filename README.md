@@ -187,11 +187,16 @@ $ vagrant sakura-list-id
 |`ubuntu-18.04`|`ubuntu`| - | - |
 |`ubuntu-16.04`|`ubuntu`| - | - |
 |`centos`|`root`| [example](examples/centos.md) | - |
+|`centos8`|`root`| [example](examples/centos8.md) | - |
+|`centos7`|`root`| [example](examples/centos7.md) | - |
 |`centos6`|`root`| [example](examples/centos6.md) | - |
 |`debian`|`root`| [example](examples/debian.md) | - |
+|`debian10`|`root`| - | - |
+|`debian9`|`root`| - | - |
 |`coreos`|`core`| [example](examples/coreos.md) | - |
 |`freebsd`|`root`| [example](examples/freebsd.md) | - |
 |`rancheros`|`rancher`| [example](examples/rancheros.md) | メモリ2GB以上のプランが必要 |
+|`k3os`|`rancher`| [example](examples/k3os.md) | - |
 
 - ``disk_source_archive`` - サーバで利用するディスクのベースとするアーカイブのID (※`os_type`とは同時に指定できません)
 - ``server_name`` - サーバ名
