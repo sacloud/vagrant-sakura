@@ -223,17 +223,18 @@ $ vagrant sakura-list-id
 ```sh
 $ bundle
 ```
-依存パッケージが入ったら、。。。
-開発を始められます。
-``Vagrantfile`` を clone したディレクトリに置いて
-(.gitignore に書いてあるので git には無視されます)、
-以下の行を ``Vagrantfile`` に足してやれば、プラグインをインストールしなくても
-開発中の Vagrant 環境をテストすることができます。
-```Ruby
-Vagrant.require_plugin "vagrant-sakura"
+
+開発中のプラグインをテストするには以下のようにビルドしてから`vagrant plugin`コマンドでプラグインをインストールします。
+
+```sh
+bundle exec rake build
+vagrant plugin install pkg/vagrant-sakura-*.gem
 ```
 
-Vagrant を実行する時は bundler を使ってください:
+プラグインをインストール後、``Vagrantfile`` を clone したディレクトリに置いて
+(.gitignore に書いてあるので git には無視されます)、
+
+開発中の Vagrant 環境をテストすることができます。
 ```sh
-$ bundle exec vagrant up --provider=sakura
+$ vagrant up 
 ```
