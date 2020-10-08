@@ -17,6 +17,9 @@ module VagrantPlugins
           "ubuntu" => {
               "Tags.Name" => [%w(current-stable distro-ubuntu)]
           },
+          "ubuntu-20.04" => {
+              "Tags.Name" => [%w(ubuntu-20.04-latest)]
+          },
           "ubuntu-18.04" => {
               "Tags.Name" => [%w(ubuntu-18.04-latest)]
           },
