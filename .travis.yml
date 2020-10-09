@@ -7,9 +7,9 @@ addons:
     packages:
     - bsdtar
 rvm:
-- 2.4.4
-- 2.5.0
-- 2.5.1
+  - 2.5
+  - 2.6
+  - 2.7
 
 env:
   global:
