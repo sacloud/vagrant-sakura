@@ -1,6 +1,12 @@
 # CHANGELOG
 
-## 0.4.1 (2020/10/09)
+## 0.4.2 (2020/10/09)
+
+- Github Actions [#52] (@yamamoto-febc)
+- Use vagrant 2.2.10 [#51] (@yamamoto-febc)
+- Remove ruby-2.3.7 from test targets on TravisCI [#49] (@yamamoto-febc)
+
+## 0.4.1 (2020/10/08)
 
 - Ubuntu 20.04 (#48)
 
