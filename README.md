@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/vagrant-sakura.png)](http://badge.fury.io/rb/vagrant-sakura)
 [![Build Status](https://travis-ci.org/sacloud/vagrant-sakura.svg?branch=master)](https://travis-ci.org/sacloud/vagrant-sakura)
-[![Slack](https://slack.usacloud.jp/badge.svg)](https://slack.usacloud.jp/)  
+[![Slack](https://img.shields.io/badge/Slack-Sacloud%20Workspace-brightgreen)](https://join.slack.com/t/sacloud/shared_invite/zt-ohsdpv2t-_Bi1_F0jDAAmWjoMQCmAxg)    
 
 この gem は [Vagrant](http://www.vagrantup.com) に
 [さくらのクラウド](http://cloud.sakura.ad.jp)上のサーバを操作する
