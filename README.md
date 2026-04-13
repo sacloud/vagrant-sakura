@@ -1,3 +1,12 @@
+> [!CAUTION]
+> **本プロジェクトは提供を終了しました**
+>
+> 2026年4月13日をもって、本リポジトリはアーカイブされました。  
+> 本プロジェクトはすでにメンテナンスを終了しており、  
+> 今後、機能追加、バグ修正、ならびにセキュリティアップデートは一切提供されません。
+>
+> 本プロジェクトの新規利用および継続利用は推奨されません。
+
 # Vagrant Sakura Provider
 
 [![Gem Version](https://badge.fury.io/rb/vagrant-sakura.png)](http://badge.fury.io/rb/vagrant-sakura)
